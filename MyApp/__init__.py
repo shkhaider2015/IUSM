@@ -4,6 +4,8 @@ import pyrebase
 
 firebase = pyrebase.initialize_app(Config.firebase_config)
 db = firebase.database()
+auth = firebase.auth()
+storage = firebase.storage()
 
 def create_app(config_class=Config):
 
