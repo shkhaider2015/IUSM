@@ -158,14 +158,12 @@ iframe {
 {
   background-color: #A90F0F;
 }
-#shk
+
+.article-img
 {
-  color: #A90F0F;
-  background-color: aqua;
-}
-.para
-{
-  font-size: larger;
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
 }
 
 /*//////////////////////////////////////////////////////////////////

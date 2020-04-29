@@ -3,10 +3,30 @@
 {% block content %}
 
 <div class="container">
-    <h1>Hello Admin</h1>
-    <h1>Hello Admin</h1>
-    <h1>Hello Admin</h1>
-    <h1>Hello Admin</h1>
+    <h1 class="mt-4" >User List</h1>
+
+   {% for user in users %}
+
+   <h1>user</h1>
+
+   {% endfor %}
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <!-- Profile Image -->
+            <img src="#" alt="" class="rounded-circle article-img">
+        </div>
+        <div class="col-md-4">
+            <!-- Name -->
+            <p><b></b></p>
+        </div>
+        <div class="col-md-5">
+            <!-- Email -->
+            <p></p>
+        </div>
+
+    </div>
 </div>
 
 {% endblock content %}
