@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect,url_for
 from MyApp import db
 
 admin = Blueprint('admin', __name__)
@@ -13,28 +13,34 @@ def admin_login():
         password = request.form['password']
 
         if email == email_data and password == pass_data:
-            users = db.child("Users").get()
-            userList = list()
-            for user in users.each():
-                profile = user.val()
-                data = profile['Profile']
-                print("My data : " + str(data))
-                userList.append(data)
-            return render_template('admin_home.html', users=userList)
+            return redirect(url_for('admin.admin_main'))
         else:
             print("Not Matched")
-    users_1 = db.child("Users").get()
-    for user in users_1.each():
-        val= user.val()
-        data = val['Profile']
-        print(data)
-        name = data['name']
-        print(name)
-        
-
     return render_template("index.html")
 
 
 @admin.route("/home")
 def admin_main():
-    return render_template("admin_home.html")
+    users = db.child("Users").get()
+    userList = list()
+    for user in users.each():
+        profile = user.val()
+        data = profile['Profile']
+        print("My data : " + str(data))
+        userList.append(data)
+    return render_template("admin_home_page.html", users=userList)
+
+@admin.route("/order")
+def admin_order():
+    orders = db.child("Orders").get()
+    objectList = list()
+    dictList = list()
+    for order in orders.each():
+        objectList.append(dict(order.val()))
+    
+    for li in objectList:
+        for k,value in li.items():
+            print(k)
+            dictList.append(value)
+    print(dictList)
+    return render_template("admin_order.html", dictList=dictList)

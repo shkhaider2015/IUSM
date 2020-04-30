@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="container">
+    <h1 class="mt-4" >User List</h1>
+    <br>
+    <hr>
+
+   {% for user in users %}
+    <div class="row mt-3">
+
+        <div class="col-md-2">
+            <!-- Profile Image -->
+            <img src="{{ user['image'] }}" alt="" class="rounded-circle article-img">
+        </div>
+        <div class="col-md-2 my-auto">
+            <!-- Name -->
+            <p><b>{{ user['name'] }}</b></p>
+        </div>
+        <div class="col-md-3 my-auto">
+            <!-- Email -->
+            <p>{{ user['email'] }}</p>
+        </div>
+        <div class="col-md-5 my-auto">
+            <div class="row">
+                <div class="col-md-4">
+                <button class="btn btn-info">View Profile</button>
+
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-info">Message</button>
+            </div>
+            <div class="col-md-4">
+                <button class="btn btn-danger">Delete</button>
+            </div>
+
+            </div>
+
+        </div>
+
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
