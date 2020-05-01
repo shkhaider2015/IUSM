@@ -4,43 +4,62 @@
 <h1>Orders</h1>
 <hr><br>
 
-{% for data in dictList %}
 
-<div class="row mt-3">
 
-    <div class="col-md-2">
-        <!-- image -->
-        <p>No Image</p>
-    </div>
-    <div class="col-md-2 my-auto">
-        <!-- name -->
-        <p>{{data['clintName']}}</p>
-    </div>
-    <div class="col-md-2 my-auto">
-        <!-- dish name -->
-        <p>{{data['dishName']}}</p>
-    </div>
-    <div class="col-md-2 my-auto">
-        <!-- dish icon -->
-        <p>No Icon</p>
-    </div>
-    <div class="col-md-1 my-auto">
-        <!-- quantity -->
-        <p>{{data['dishQuantity']}}</p>
-    </div>
+{% for object in objectList%}
+
+    {% for k,v in object.items() %}
+       
+    <div class="row mt-3">
+
+        <div class="col-md-2">
+            <!-- image -->
+            <p>No Image</p>
+        </div>
+        <div class="col-md-2 my-auto">
+            <!-- name -->
+            <p>{{v['clintName']}}</p>
+        </div>
+        <div class="col-md-2 my-auto">
+            <!-- dish name -->
+            <p>{{v['dishName']}}</p>
+        </div>
+        <div class="col-md-2 my-auto">
+            <!-- dish icon -->
+            <p>No Icon</p>
+        </div>
+        <div class="col-md-1 my-auto">
+            <!-- quantity -->
+            <p>{{v['dishQuantity']}}</p>
+        </div>
+        
+        <div class="col-md-3 my-auto">
+            {% if v['accepted'] == true %}
     
-    <div class="col-md-3 my-auto">
-        {% if data['accepted'] == true %}
+                <button class="btn btn-success smgd" disabled >Accepted</button>
+            {% else %}
+                <button class="btn btn-info btn-outline-info smgd" value="{{v['clintUID'] + k}}" >Accept</button>
+            {% endif %}
+        </div>    
+    
+    </div>
 
-            <button class="btn btn-success" >Accepted</button>
-        {% else %}
-            <button class="btn btn-success btn-outline-success" >Accept</button>
-        {% endif %}
-    </div>    
 
-</div>
+    {% endfor%}
+
 {% endfor %}
 
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+$( "button" ).click(function() {
+    var data = $(this).val()
+    console.log(data)
+});
+
+});
+</script>
 
 
 

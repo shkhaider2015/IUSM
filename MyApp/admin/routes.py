@@ -39,8 +39,13 @@ def admin_order():
         objectList.append(dict(order.val()))
     
     for li in objectList:
+        print(li)
         for k,value in li.items():
             print(k)
             dictList.append(value)
     print(dictList)
-    return render_template("admin_order.html", dictList=dictList)
+    return render_template("admin_order.html", objectList=objectList)
+
+@admin.route("/accept_process", methods=['POST'])
+def process_accept():
+    print("Accept Called")
