@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, redirect,url_for
+from flask import Blueprint, render_template, request, flash, redirect,url_for, json
 from MyApp import db
 
 admin = Blueprint('admin', __name__)
@@ -33,19 +33,21 @@ def admin_main():
 @admin.route("/order")
 def admin_order():
     orders = db.child("Orders").get()
+    print(type(orders))
     objectList = list()
     dictList = list()
     for order in orders.each():
         objectList.append(dict(order.val()))
-    
-    for li in objectList:
-        print(li)
-        for k,value in li.items():
-            print(k)
-            dictList.append(value)
-    print(dictList)
     return render_template("admin_order.html", objectList=objectList)
 
 @admin.route("/accept_process", methods=['POST'])
 def process_accept():
-    print("Accept Called")
+    data = None
+    if request.method == 'POST':
+        data = request.form['data']
+        user_id = str(data[:-13:1])
+        order_id = str(data[-13::1])
+        pair = {'accepted' : True}
+        db.child("Orders").child(user_id).child(order_id).update(pair)
+        return json.dumps({'status':'OK'})
+    print("Not a Post Request")

@@ -4,17 +4,45 @@
 <h1>Orders</h1>
 <hr><br>
 
+<div class="row mt-3 h-100 justify-content-center align-items-center">
+
+    <div class="col-md-2">
+        <!-- image -->
+        
+    </div>
+    <div class="col-md-2 my-auto border">
+        <!-- name -->
+        <p><b>Clint Name</b></p>
+    </div>
+    <div class="col-md-4 my-auto text-center border">
+        <!-- dish name -->
+        <p ><b>Dish Name</b></p>
+    </div>
+    <!-- <div class="col-md-2 my-auto ">
+         dish icon
+        <b></b>
+    </div> -->
+    <div class="col-md-2 my-auto text-center border">
+        <!-- quantity -->
+        <p><b>Quantity</b></p>
+    </div>
+    
+    <div class="col-md-2 my-auto text-center border">
+        <p><b>Action</b></p>
+    </div>    
+
+</div>
 
 
 {% for object in objectList%}
 
     {% for k,v in object.items() %}
        
-    <div class="row mt-3">
+    <div class="row mt-3 h-100 justify-content-center align-items-center">
 
         <div class="col-md-2">
             <!-- image -->
-            <p>No Image</p>
+            <img class="rounded-circle article-img" src="{{v['clintPhotoUri']}}" alt="image">
         </div>
         <div class="col-md-2 my-auto">
             <!-- name -->
@@ -28,12 +56,12 @@
             <!-- dish icon -->
             <p>No Icon</p>
         </div>
-        <div class="col-md-1 my-auto">
+        <div class="col-md-2 my-auto text-center">
             <!-- quantity -->
             <p>{{v['dishQuantity']}}</p>
         </div>
         
-        <div class="col-md-3 my-auto">
+        <div class="col-md-2 my-auto text-center">
             {% if v['accepted'] == true %}
     
                 <button class="btn btn-success smgd" disabled >Accepted</button>
@@ -54,8 +82,23 @@
 $(document).ready(function() {
 
 $( "button" ).click(function() {
-    var data = $(this).val()
+    var data = $(this).val();
+    var self = $(this);
     console.log(data)
+    $.ajax({
+            url: '/accept_process',
+            datatype : 'application/json;charset=UTF-8',
+			data: {"data": data},
+			type: 'POST',
+			success: function(response){
+                console.log(response);
+                self.removeClass("btn-info btn-outline-info").addClass("btn-success");
+                self.attr('disabled' , 'disabled').text("Accepted");
+			},
+			error: function(error){
+				console.log(error);
+			}
+		});
 });
 
 });
