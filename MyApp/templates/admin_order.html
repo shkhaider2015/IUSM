@@ -6,15 +6,12 @@
 
 <div class="row mt-3 h-100 justify-content-center align-items-center">
 
-    <div class="col-md-2">
-        <!-- image -->
-        
-    </div>
-    <div class="col-md-2 my-auto border">
+    
+    <div class="col-md-3 col-sm-3 my-auto border">
         <!-- name -->
         <p><b>Clint Name</b></p>
     </div>
-    <div class="col-md-4 my-auto text-center border">
+    <div class="col-md-4 col-sm-4 my-auto text-center border">
         <!-- dish name -->
         <p ><b>Dish Name</b></p>
     </div>
@@ -22,12 +19,16 @@
          dish icon
         <b></b>
     </div> -->
-    <div class="col-md-2 my-auto text-center border">
+    <div class="col-md-1 col-sm-1 my-auto text-center border">
         <!-- quantity -->
         <p><b>Quantity</b></p>
     </div>
+    <div class="col-md-2 col-sm-2 my-auto text-center border">
+        <!-- quantity -->
+        <p><b>Location</b></p>
+    </div>
     
-    <div class="col-md-2 my-auto text-center border">
+    <div class="col-md-2 col-sm-2 my-auto text-center border">
         <p><b>Action</b></p>
     </div>    
 
@@ -40,7 +41,7 @@
        
     <div class="row mt-3 h-100 justify-content-center align-items-center">
 
-        <div class="col-md-2">
+        <div class="col-md-1">
             <!-- image -->
             <img class="rounded-circle article-img" src="{{v['clintPhotoUri']}}" alt="image">
         </div>
@@ -54,11 +55,15 @@
         </div>
         <div class="col-md-2 my-auto">
             <!-- dish icon -->
-            <p>No Icon</p>
+            <img class="rounded " src="../static/images/food_icon/{{v['dishName'].lower()}}.png" alt="image" width="30px" height="30px">
+        </div>
+        <div class="col-md-1 my-auto text-center">
+            <!-- quantity -->
+            <p>{{v['dishQuantity']}}</p>
         </div>
         <div class="col-md-2 my-auto text-center">
             <!-- quantity -->
-            <p>{{v['dishQuantity']}}</p>
+            <p>{{v['clintLocation']}}</p>
         </div>
         
         <div class="col-md-2 my-auto text-center">
