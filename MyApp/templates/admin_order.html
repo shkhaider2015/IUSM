@@ -35,7 +35,7 @@
 </div>
 
 
-{% for object in objectList%}
+{% for object in objectList|reverse %}
 
     {% for k,v in object.items() %}
        
@@ -55,7 +55,7 @@
         </div>
         <div class="col-md-2 my-auto">
             <!-- dish icon -->
-            <img class="rounded " src="../static/images/food_icon/{{v['dishName'].lower()}}.png" alt="image" width="30px" height="30px">
+            <img class="rounded " src="../static/images/food_icon/{{v['dishName'].replace(' ', '_').lower()}}.png" alt="image" width="30px" height="30px">
         </div>
         <div class="col-md-1 my-auto text-center">
             <!-- quantity -->
@@ -68,10 +68,21 @@
         
         <div class="col-md-2 my-auto text-center">
             {% if v['accepted'] == true %}
+
+                {% if v['completed'] %}
+                    <button class="btn btn-success smgd" disabled >Completed</button>
+                {% else %}
+                    <button class="btn btn-success smgd" disabled >Accepted</button>
+                {% endif %}
     
-                <button class="btn btn-success smgd" disabled >Accepted</button>
             {% else %}
-                <button class="btn btn-info btn-outline-info smgd" value="{{v['clintUID'] + k}}" >Accept</button>
+
+                {% if v['cancelled'] %}
+                    <button class="btn btn-danger smgd" disabled >Cancelled</button>
+                {% else %}
+                    <button class="btn btn-info btn-outline-info smgd" value="{{v['clintUID'] + k}}" >Accept</button>
+                {% endif %}
+                
             {% endif %}
         </div>    
     

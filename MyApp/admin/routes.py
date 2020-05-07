@@ -35,7 +35,6 @@ def admin_order():
     orders = db.child("Orders").get()
     print(type(orders))
     objectList = list()
-    dictList = list()
     for order in orders.each():
         objectList.append(dict(order.val()))
     return render_template("admin_order.html", objectList=objectList)
