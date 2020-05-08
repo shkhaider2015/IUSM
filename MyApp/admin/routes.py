@@ -33,11 +33,12 @@ def admin_main():
 @admin.route("/order")
 def admin_order():
     orders = db.child("Orders").get()
-    print(type(orders))
     objectList = list()
     for order in orders.each():
         objectList.append(dict(order.val()))
-    return render_template("admin_order.html", objectList=objectList)
+    new_list = objectList
+    new_list.reverse()
+    return render_template("admin_order.html", objectList=new_list)
 
 @admin.route("/accept_process", methods=['POST'])
 def process_accept():
