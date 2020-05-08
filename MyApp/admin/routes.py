@@ -35,10 +35,15 @@ def admin_order():
     orders = db.child("Orders").get()
     objectList = list()
     for order in orders.each():
+        print("Loop Runs ")
+        print(order.val())
         objectList.append(dict(order.val()))
-    new_list = objectList
-    new_list.reverse()
-    return render_template("admin_order.html", objectList=new_list)
+    
+    # objectList = dict(orders)
+    print("------------------This is Object List ---------------------")
+    print(objectList)
+    print("------------------End of Object List ---------------------")
+    return render_template("admin_order.html", objectList=objectList)
 
 @admin.route("/accept_process", methods=['POST'])
 def process_accept():
@@ -48,6 +53,9 @@ def process_accept():
         user_id = str(data[:-13:1])
         order_id = str(data[-13::1])
         pair = {'accepted' : True}
-        db.child("Orders").child(user_id).child(order_id).update(pair)
+        print(user_id)
+        print(order_id)
+        db.child("Orders").child(order_id).update(pair)
+        db.child("Users").child(user_id).child("Orders").child(order_id).update(pair)
         return json.dumps({'status':'OK'})
     print("Not a Post Request")

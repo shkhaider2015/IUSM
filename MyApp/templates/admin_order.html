@@ -35,41 +35,40 @@
 </div>
 
 
-{% for object in objectList|reverse %}
+{% for k in objectList %}
 
-    {% for k,v in object.items() %}
        
     <div class="row mt-3 h-100 justify-content-center align-items-center">
 
         <div class="col-md-1">
             <!-- image -->
-            <img class="rounded-circle article-img" src="{{v['clintPhotoUri']}}" alt="image">
+            <img class="rounded-circle article-img" src="{{k['clintPhotoUri']}}" alt="image">
         </div>
         <div class="col-md-2 my-auto">
             <!-- name -->
-            <p>{{v['clintName']}}</p>
+            <p>{{k['clintName']}}</p>
         </div>
         <div class="col-md-2 my-auto">
             <!-- dish name -->
-            <p>{{v['dishName']}}</p>
+            <p>{{k['dishName']}}</p>
         </div>
         <div class="col-md-2 my-auto">
             <!-- dish icon -->
-            <img class="rounded " src="../static/images/food_icon/{{v['dishName'].replace(' ', '_').lower()}}.png" alt="image" width="30px" height="30px">
+            <img class="rounded " src="../static/images/food_icon/{{k['dishName']}}.png" alt="image" width="30px" height="30px">
         </div>
         <div class="col-md-1 my-auto text-center">
             <!-- quantity -->
-            <p>{{v['dishQuantity']}}</p>
+            <p>{{k['dishQuantity']}}</p>
         </div>
         <div class="col-md-2 my-auto text-center">
             <!-- quantity -->
-            <p>{{v['clintLocation']}}</p>
+            <p>{{k['clintLocation']}}</p>
         </div>
         
         <div class="col-md-2 my-auto text-center">
-            {% if v['accepted'] == true %}
+            {% if k['accepted'] == true %}
 
-                {% if v['completed'] %}
+                {% if k['completed'] %}
                     <button class="btn btn-success smgd" disabled >Completed</button>
                 {% else %}
                     <button class="btn btn-success smgd" disabled >Accepted</button>
@@ -77,10 +76,10 @@
     
             {% else %}
 
-                {% if v['cancelled'] %}
+                {% if k['cancelled'] %}
                     <button class="btn btn-danger smgd" disabled >Cancelled</button>
                 {% else %}
-                    <button class="btn btn-info btn-outline-info smgd" value="{{v['clintUID'] + k}}" >Accept</button>
+                    <button class="btn btn-info btn-outline-info smgd" value="{{k['clintUID'] + k['orderTime']}}" >Accept</button>
                 {% endif %}
                 
             {% endif %}
@@ -89,7 +88,7 @@
     </div>
 
 
-    {% endfor%}
+    
 
 {% endfor %}
 
