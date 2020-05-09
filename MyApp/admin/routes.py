@@ -38,11 +38,8 @@ def admin_order():
         print("Loop Runs ")
         print(order.val())
         objectList.append(dict(order.val()))
-    
-    # objectList = dict(orders)
-    print("------------------This is Object List ---------------------")
     print(objectList)
-    print("------------------End of Object List ---------------------")
+    objectList.reverse()
     return render_template("admin_order.html", objectList=objectList)
 
 @admin.route("/accept_process", methods=['POST'])

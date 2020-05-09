@@ -7,13 +7,13 @@
 <div class="row mt-3 h-100 justify-content-center align-items-center">
 
     
-    <div class="col-md-3 col-sm-3 my-auto border">
+    <div class="col-md-3 col-sm-3 my-auto text-center border">
         <!-- name -->
-        <p><b>Clint Name</b></p>
+        <p><b>Clint</b></p>
     </div>
     <div class="col-md-4 col-sm-4 my-auto text-center border">
         <!-- dish name -->
-        <p ><b>Dish Name</b></p>
+        <p ><b>Dish</b></p>
     </div>
     <!-- <div class="col-md-2 my-auto ">
          dish icon
@@ -71,7 +71,7 @@
                 {% if k['completed'] %}
                     <button class="btn btn-success smgd" disabled >Completed</button>
                 {% else %}
-                    <button class="btn btn-success smgd" disabled >Accepted</button>
+                    <button class="btn btn-success smgd" disabled >Accepted </button>
                 {% endif %}
     
             {% else %}
@@ -79,16 +79,13 @@
                 {% if k['cancelled'] %}
                     <button class="btn btn-danger smgd" disabled >Cancelled</button>
                 {% else %}
-                    <button class="btn btn-info btn-outline-info smgd" value="{{k['clintUID'] + k['orderTime']}}" >Accept</button>
+                    <button class="btn btn-info btn-outline-info smgd" value="{{k['clintUID'] + k['orderTime']}}" > Accept  </button>
                 {% endif %}
                 
             {% endif %}
         </div>    
     
     </div>
-
-
-    
 
 {% endfor %}
 
