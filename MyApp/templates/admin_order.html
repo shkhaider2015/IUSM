@@ -46,7 +46,7 @@
         </div>
         <div class="col-md-2 my-auto">
             <!-- name -->
-            <p>{{k['clintName']}}</p>
+           <a href="{{ url_for('admin.user_profile', uid=k['clintUID'] ) }}"><p>{{k['clintName']}}</p></a> 
         </div>
         <div class="col-md-2 my-auto">
             <!-- dish name -->

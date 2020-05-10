@@ -56,3 +56,13 @@ def process_accept():
         db.child("Users").child(user_id).child("Orders").child(order_id).update(pair)
         return json.dumps({'status':'OK'})
     print("Not a Post Request")
+
+
+@admin.route("/profile/<string:uid>")
+def user_profile(uid):
+    profile_path = db.child("Users").child(uid).child("Profile").get()
+    orders_path = db.child("Users").child(uid).child("Orders").get()
+    profile = dict(profile_path.val())
+    orders = dict(orders_path.val())
+    
+    return render_template("profile.html", profile=profile, orders=orders)
