@@ -25,7 +25,7 @@
         <div class="col-md-5 my-auto">
             <div class="row">
                 <div class="col-md-4">
-                <button class="btn btn-info">View Profile</button>
+                <a href="{{ url_for('admin.user_profile', uid=user['uid']) }}"><button class="btn btn-info">View Profile</button></a>
 
             </div>
             <div class="col-md-4">
@@ -42,5 +42,7 @@
     </div>
     {% endfor %}
 </div>
+
+
 
 {% endblock content %}

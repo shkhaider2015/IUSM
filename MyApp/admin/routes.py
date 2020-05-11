@@ -66,3 +66,7 @@ def user_profile(uid):
     orders = dict(orders_path.val())
     
     return render_template("profile.html", profile=profile, orders=orders)
+
+@admin.route("/messaging")
+def chat():
+    return render_template("chat_room.html")
