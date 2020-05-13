@@ -69,4 +69,20 @@ def user_profile(uid):
 
 @admin.route("/messaging")
 def chat():
-    return render_template("chat_room.html")
+    data = db.child("Chat").get()
+    data = dict(data.val())
+    user_msg = dict()
+    print(data)
+    for k,v in data.items():
+        if v['senderId'] not in user_msg:
+            user_msg[v['senderId']] = {k:v}
+        else:
+            user_msg[v['senderId']].update({k:v})
+    side_bar = dict()
+    for k,v in user_msg.items():
+        for kk,vv in v.items():
+            side_bar[kk] = vv
+            break
+
+    return render_template("chat_room.html", user_msg=user_msg, side_bar=side_bar)
+
