@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect,url_for, json
 from MyApp import db
+from datetime import datetime
 
 admin = Blueprint('admin', __name__)
 
@@ -72,17 +73,48 @@ def chat():
     data = db.child("Chat").get()
     data = dict(data.val())
     user_msg = dict()
-    print(data)
     for k,v in data.items():
         if v['senderId'] not in user_msg:
             user_msg[v['senderId']] = {k:v}
         else:
             user_msg[v['senderId']].update({k:v})
-    side_bar = dict()
+    side_bar = list()
     for k,v in user_msg.items():
         for kk,vv in v.items():
-            side_bar[kk] = vv
+            side_bar.append({kk:vv})
             break
+    side_bar.reverse()
+    first_person = side_bar[0]
+    for k,v in first_person.items():
+        first_person = v
+    first_person_data = db.child("Users").child(first_person['senderId']).child("Chat").get()
+    first_person_data = dict(first_person_data.val())
+    
+    return render_template("chat_room.html", first_person_data=first_person_data, side_bar=side_bar, senderID=first_person['senderId'])
 
-    return render_template("chat_room.html", user_msg=user_msg, side_bar=side_bar)
+@admin.route("/send_message", methods=['POST'])
+def message_send():
+    data = None
+    msg = None
+    if request.method == 'POST':
+        time = datetime.now().timestamp() * 1000
+        data = request.form['data']
+        msg = request.form['msg']
+        senderid = request.form['senderid']
+        if data == 'admin' and msg != None:
+            print("Admin Call")
+            pushData = { 
+                'senderId' : "17352015",
+                'senderName' : "Admin",
+                'senderEmail' : "admin@gmail.com",
+                'senderProfileUri' : str("https://firebasestorage.googleapis.com/v0/b/canteen-management-syste-e183d.appspot.com/o/Admin%2Fburger.png?alt=media&token=b6731782-c9a6-452a-8bb6-46a4ce8a8321"),
+                'msgTime' : time,
+                'msg' : msg}
+
+            db.child("Users").child(senderid).child("Chat").child(time).push(pushData)
+            
+        else:
+            print("Another Call")
+        return json.dumps({'status' : 'ok'})
+    print("Not a post Request")
 
