@@ -101,7 +101,7 @@ $( "button" ).click(function() {
             url: '/accept_process',
             datatype : 'application/json;charset=UTF-8',
 			data: {"data": data},
-			type: 'POST',
+			type: 'GET',
 			success: function(response){
                 console.log(response);
                 self.removeClass("btn-info btn-outline-info").addClass("btn-success");
