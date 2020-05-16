@@ -80,8 +80,9 @@ def get_data(key):
 
 @admin.route("/messaging/<string:key>", methods=['POST', 'GET'])
 def chat(key):
-    
-    return render_template("chat_room.html")
+    data = get_data(key)
+    print(data)
+    return render_template("chat_room.html", data=data)
 
 @admin.route("/send_message", methods=['POST'])
 def message_send():

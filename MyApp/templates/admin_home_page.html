@@ -29,7 +29,7 @@
 
             </div>
             <div class="col-md-4">
-                <button class="btn btn-info">Message</button>
+                <a href="{{ url_for('admin.chat', key=user['uid']  ) }}"><button class="btn btn-info">Message</button></a>
             </div>
             <div class="col-md-4">
                 <button class="btn btn-danger">Delete</button>
