@@ -25,11 +25,14 @@ def create_app(config_class=Config):
 
     from MyApp.admin.routes import admin
     from MyApp.main.routes import main
+    from MyApp.messanger.routes import messanger
 
     app.register_blueprint(admin)
     app.register_blueprint(main)
+    app.register_blueprint(messanger)
 
     app.add_template_filter(time)
+
 
 
     return app

@@ -12,7 +12,7 @@
         
         {% if val['senderId'] != '17352015' %}
         <div class="incoming_msg">
-          <div class="incoming_msg_img rounded-circle"> <img src="{{val['senderProfileUri']}}" alt="Profile Picture"> </div>
+          <div class="incoming_msg_img rounded-circle"> <img src="{{ val['senderProfileUri'] }}" alt="Profile Picture"> </div>
           <div class="received_msg">
             <div class="received_withd_msg">
               <p>{{ val['msg'] }}</p>
@@ -33,6 +33,10 @@
         
         {% endfor %}
   
+        <ul id="messages">
+          <li>Shakeel</li>
+        </ul>
+      
 
 
       </div>
