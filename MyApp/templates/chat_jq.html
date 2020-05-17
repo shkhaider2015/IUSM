@@ -46,12 +46,15 @@
 <script type="text/javascript">
     $(document).ready(function() {
     console.log("ready ")
+
+
     var key = $(".msg_send_btn").val();
+    var msg_history = $(".msg_history");
     $.ajax({
                 
                 url: '/accept_chat_process',
                 datatype : 'application/json;charset=UTF-8',
-                data: {"key": key},
+                data: {"key": key, 'm_type' : null},
                 type: 'POST',
                 success: function(response){
                     console.log( "This is response" + response);
@@ -112,11 +115,11 @@
         $.ajax({
                 url: '/accept_chat_process',
                 datatype : 'application/json;charset=UTF-8',
-                data: {"key": key},
+                data: {"key": key, 'm_type' : 'send'},
                 type: 'POST',
                 success: function(response){
                     console.log( "This is response" + response);
-                    
+                    msg_history.empty();
                     var data = JSON.parse(response);
                     var x, id;
                     for (x in data)

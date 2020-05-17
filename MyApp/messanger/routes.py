@@ -55,9 +55,14 @@ def message_send():
 def chat_jq(key):
     return render_template("chat_jq.html", key=key)
 
-@messanger.route("/accept_chat_process", methods=['POST'])
+@messanger.route("/accept_chat_process", methods=['POST', 'GET'])
 def chat_process():
     key = request.form['key']
+    m_type = request.form['m_type']
     data = get_data(key)
-
+    if m_type == 'send':
+        print("send request")
+        db.child("Users").child(key).child("Chat").child()
+    else:
+        print("not send request")
     return json.dumps(data)
