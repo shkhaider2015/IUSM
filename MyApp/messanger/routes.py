@@ -4,6 +4,7 @@ import time
 
 messanger = Blueprint('messanger', __name__)
 
+previous_data = dict()
 
 def get_data(key):
     print(key)
@@ -61,6 +62,7 @@ def chat_jq(key):
 def chat_process():
     key = request.form['key']
     m_type = request.form['m_type']
+    data = dict()
     
     if m_type == 'send':
         print("send request")
@@ -75,6 +77,28 @@ def chat_process():
             'msg' : msg
         }
         db.child("Users").child(key).child("Chat").child(msgTime).set(set_data)
+        data = get_data(key)
+        previous_data = data
+        
+    elif m_type == 'detect_changes':
+        next_data = get_data(key)
+        if not bool(previous_data):
+            print("Previous Dict is empty")
+            previous_data = next_data
+            return
+        else:
+            if previous_data == next_data:
+                print("Nothing Changes")
+                return
+            else:
+                data = next_data
+                previous_data = next_data
+                print("Somthing changes")
+    elif m_type == "refresh":
+        data = get_data(key)
+        previous_data = data
+
+
     
-    data = get_data(key)
+    
     return json.dumps(data)
