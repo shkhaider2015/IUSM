@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, flash, redirect,url_for, json
 from MyApp import db
+import time
 
 messanger = Blueprint('messanger', __name__)
 
@@ -10,6 +11,7 @@ def get_data(key):
     dicts = dict(tmp.val())
     print(dicts)
     return dicts
+
 
 
 @messanger.route("/messaging/<string:key>", methods=['POST', 'GET'])
@@ -59,10 +61,20 @@ def chat_jq(key):
 def chat_process():
     key = request.form['key']
     m_type = request.form['m_type']
-    data = get_data(key)
+    
     if m_type == 'send':
         print("send request")
-        db.child("Users").child(key).child("Chat").child()
-    else:
-        print("not send request")
+        msg = request.form['msg']
+        msgTime = int(time.time()) * 1000
+        set_data = {
+            'senderName' : 'admin',
+            'senderId' : '17352015',
+            'senderEmail' : 'admin@gmail.com',
+            'senderProfileUri' : 'https://firebasestorage.googleapis.com/v0/b/canteen-management-syste-e183d.appspot.com/o/Admin%2Fburger.png?alt=media&token=b6731782-c9a6-452a-8bb6-46a4ce8a8321',
+            'msgTime' : msgTime,
+            'msg' : msg
+        }
+        db.child("Users").child(key).child("Chat").child(msgTime).set(set_data)
+    
+    data = get_data(key)
     return json.dumps(data)

@@ -8,29 +8,7 @@
     <div class="mesgs">
       <div class="msg_history">
 
-        <div class="incoming_msg">
-          <div class="incoming_msg_img rounded-circle"> <img src="" alt="Profile Picture"> </div>
-          <div class="received_msg">
-            <div class="received_withd_msg">
-              <p>jhkjhkjkhkjhkjhkjhkjhkjh</p>
-              <span class="time_date"> </span></div>
-          </div>
-        </div>
-
-       
-
-        <div class="outgoing_msg">
-          <div class="sent_msg">
-            <p>hjhgjhgjhgjhgjghjh</p>
-            <span class="time_date"> </span> </div>
-        </div>
-        
-        <ul class="uul">
-
-        </ul>
-        
-      
-
+        <!-- Messages shows here -->
 
       </div>
       <div class="type_msg">
@@ -110,12 +88,14 @@
     $( "button" ).click(function() {
         var key = $(this).val();
         var msg_history = $(".msg_history");
-
-        console.log("Ajax Called")
+        var msg = $(".write_msg").val();
+      if(msg !== "" )
+      {
+        console.log("Message is not empty");
         $.ajax({
                 url: '/accept_chat_process',
                 datatype : 'application/json;charset=UTF-8',
-                data: {"key": key, 'm_type' : 'send'},
+                data: {"key": key, 'm_type' : 'send', 'msg' : msg},
                 type: 'POST',
                 success: function(response){
                     console.log( "This is response" + response);
@@ -165,6 +145,16 @@
                     console.log(error);
                 }
             });
+      
+      }
+      else
+      {
+        console.log("Message is empty");
+      }
+        console.log("Ajax Called")
+        
+
+
     });
     
     });
