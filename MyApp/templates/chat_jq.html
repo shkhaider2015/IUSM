@@ -3,7 +3,7 @@
 {% block content %}
 
 <div class="container">
-  <h3 class=" text-center">Messaging</h3>
+  <h2 class=" text-center mt-3">Chat Room</h2>
 
     <div class="mesgs">
       <div class="msg_history">
@@ -161,64 +161,75 @@
     setInterval(function(){
       console.log("Run Interval")
       
-
-      // $.ajax({
+      
+      $.ajax({
                 
-      //           url: '/accept_chat_process',
-      //           datatype : 'application/json;charset=UTF-8',
-      //           data: {"key": key, 'm_type' : "detect_changes"},
-      //           type: 'POST',
-      //           success: function(response){
-      //               console.log( "This is response" + response);
+                url: '/accept_chat_process',
+                datatype : 'application/json;charset=UTF-8',
+                data: {"key": key, 'm_type' : "detect_changes"},
+                type: 'POST',
+                success: function(response){
+                    console.log( "This is interval ajax response" + response);
                     
-      //               var data = JSON.parse(response);
-      //               var x, id;
-      //               for (x in data)
-      //               {
+                    var data = JSON.parse(response);
+                    var x, id;
+                    if("status" in data)
+                    {
+                      console.log("status is -->" + JSON.stringify(data))
+                    }
+                    else
+                    {
+                      console.log("Not status")
+                      msg_history.empty();
+                      for (x in data)
+                    {
+                        
+                        id = data[x]['senderId']
+                        if (id != "17352015")
+                        {
+                            console.log("This is clint : " + id)
+                            msg_history.append(` <div class="incoming_msg">
+                                                 <div class="incoming_msg_img rounded-circle"> <img src="` + data[x]['senderProfileURI'] + `" alt="Profile Picture"> </div>
+                                                 <div class="received_msg">
+                                                 <div class="received_withd_msg">
+                                                 <p>` + data[x]['msg'] + `</p>
+                                                 <span class="time_date">`+ data[x]['msgTime'] + ` </span></div>
+                                                 </div>
+                                                 </div> `)
+
+                            
+                            
+
+                        }
+                        else if (id == "17352015")
+                        {
+                            console.log("This is admin : " + id)
+                            msg_history.append(` <div class="outgoing_msg">
+                                                <div class="sent_msg">
+                                                <p>` +  data[x]['msg'] + `</p>
+                                                <span class="time_date">` + data[x]['msgTime'] + `</span> </div>
+                                                </div> `);
+                            
+                            
+                        }
+                        else
+                        {
+                            console.log("not clicnt nor admin : " + id)
+                        }
+                    }
                     
-      //                   id = data[x]['senderId']
-      //                   if (id != "17352015")
-      //                   {
-      //                       console.log("This is clint : " + id)
-      //                       msg_history.append(` <div class="incoming_msg">
-      //                                            <div class="incoming_msg_img rounded-circle"> <img src="` + data[x]['senderProfileURI'] + `" alt="Profile Picture"> </div>
-      //                                            <div class="received_msg">
-      //                                            <div class="received_withd_msg">
-      //                                            <p>` + data[x]['msg'] + `</p>
-      //                                            <span class="time_date">`+ data[x]['msgTime'] + ` </span></div>
-      //                                            </div>
-      //                                            </div> `)
-
-                            
-                            
-
-      //                   }
-      //                   else if (id == "17352015")
-      //                   {
-      //                       console.log("This is admin : " + id)
-      //                       msg_history.append(` <div class="outgoing_msg">
-      //                                           <div class="sent_msg">
-      //                                           <p>` +  data[x]['msg'] + `</p>
-      //                                           <span class="time_date">` + data[x]['msgTime'] + `</span> </div>
-      //                                           </div> `);
-                            
-                            
-      //                   }
-      //                   else
-      //                   {
-      //                       console.log("not clicnt nor admin : " + id)
-      //                   }
-      //               }
+                    }
                     
 
-      //           },
-      //           error: function(error){
-      //               console.log(error);
-      //           }
-      //       });
+                },
+                error: function(error){
+                    console.log(error);
+                }
+            });
 
 
-    }, 2000)
+
+    }, 5000)
 
     });
     </script>

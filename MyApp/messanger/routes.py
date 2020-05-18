@@ -60,6 +60,7 @@ def chat_jq(key):
 
 @messanger.route("/accept_chat_process", methods=['POST', 'GET'])
 def chat_process():
+    global previous_data
     key = request.form['key']
     m_type = request.form['m_type']
     data = dict()
@@ -85,11 +86,11 @@ def chat_process():
         if not bool(previous_data):
             print("Previous Dict is empty")
             previous_data = next_data
-            return
+            return json.dumps({'status' : 'initialize'})
         else:
             if previous_data == next_data:
                 print("Nothing Changes")
-                return
+                return json.dumps({'status' : 'nothing changed'})
             else:
                 data = next_data
                 previous_data = next_data
