@@ -25,6 +25,80 @@
     $(document).ready(function() {
     console.log("ready ")
 
+      function day(num)
+      {
+        var dayName = "Sun";
+        switch(num)
+        {
+          case 0:
+          dayName = "Sun"
+          break;
+          case 1:
+          //
+          dayName = "Mon"
+          break;
+          case 2:
+          //
+          dayName = "Tue"
+          break;
+          case 3:
+          //
+          dayName = "Wed"
+          break;
+          case 4:
+          //
+          dayName = "Thu"
+          break;
+          case 5:
+          //
+          dayName = "Fri"
+          break;
+          case 6:
+          //
+          dayName = "Sat"
+          break;
+          default:
+          dayName = "def"
+          break;
+        }
+        
+        return dayName;
+      }
+
+      function getTime(milis)
+      {
+        var time;
+        var currentTime = new Date(Date.now());
+        var postTime = new Date(milis);
+
+        if(currentTime.getFullYear() === postTime.getFullYear() && currentTime.getMonth() === postTime.getMonth() )
+        {
+          time = "Today " + postTime.getHours() + ":" + postTime.getMinutes();
+        }
+        else if(currentTime.getDay() > postTime.getDay())
+        {
+          if((postTime.getDay()+1) === currentTime.getDay() )
+          {
+            time = "Yesterday " + postTime.getHours() + ":" + postTime.getMinutes();
+          }
+          else
+          {
+            time = "" + day(postTime.getDay()) + " " + postTime.getHours() + ":" +postTime.getMinutes();
+          }
+        }
+        else if(currentTime.getDay() < postTime.getDay())
+        {
+          time = "somthing wrong"
+        }
+        else
+        {
+          time = "Not clear"
+          console.log("ERROR : day > " + postTime.getDay() + " hours : " + postTime.getHours())
+          console.log("Full Time " + postTime)
+        }
+
+        return time;
+      }
 
     var key = $(".msg_send_btn").val();
     var msg_history = $(".msg_history");
@@ -45,13 +119,14 @@
                         id = data[x]['senderId']
                         if (id != "17352015")
                         {
+                            
                             console.log("This is clint : " + id)
                             msg_history.append(` <div class="incoming_msg">
                                                  <div class="incoming_msg_img rounded-circle"> <img src="` + data[x]['senderProfileURI'] + `" alt="Profile Picture"> </div>
                                                  <div class="received_msg">
                                                  <div class="received_withd_msg">
                                                  <p>` + data[x]['msg'] + `</p>
-                                                 <span class="time_date">`+ data[x]['msgTime'] + ` </span></div>
+                                                 <span class="time_date">`+ getTime(data[x]['msgTime']) + ` </span></div>
                                                  </div>
                                                  </div> `)
 
@@ -65,7 +140,7 @@
                             msg_history.append(` <div class="outgoing_msg">
                                                 <div class="sent_msg">
                                                 <p>` +  data[x]['msg'] + `</p>
-                                                <span class="time_date">` + data[x]['msgTime'] + `</span> </div>
+                                                <span class="time_date">` + getTime(data[x]['msgTime']) + `</span> </div>
                                                 </div> `);
                             
                             
@@ -187,6 +262,8 @@
                         id = data[x]['senderId']
                         if (id != "17352015")
                         {
+                            
+
                             console.log("This is clint : " + id)
                             msg_history.append(` <div class="incoming_msg">
                                                  <div class="incoming_msg_img rounded-circle"> <img src="` + data[x]['senderProfileURI'] + `" alt="Profile Picture"> </div>
