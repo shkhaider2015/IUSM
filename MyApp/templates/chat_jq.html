@@ -25,7 +25,7 @@
     $(document).ready(function() {
     console.log("ready ")
 
-      function day(num)
+      function getDayName(num)
       {
         var dayName = "Sun";
         switch(num)
@@ -64,6 +64,53 @@
         
         return dayName;
       }
+      function getMonthName(num)
+      {
+        var monthName = "Jan";
+
+        switch(num)
+        {
+          case 0:
+          monthName = "Jan";
+          break;
+          case 1:
+          monthName = "Feb";
+          break;
+          case 2:
+          monthName = "Mar";
+          break;
+          case 3:
+          monthName = "Apr";
+          break;
+          case 4:
+          monthName = "May";
+          break;
+          case 5:
+          monthName = "Jun";
+          break;
+          case 6:
+          monthName = "Jul";
+          break;
+          case 7:
+          monthName = "Aug";
+          break;
+          case 8:
+          monthName = "Sep";
+          break;
+          case 9:
+          monthName = "Oct";
+          break;
+          case 10:
+          monthName = "Nov";
+          break;
+          case 11:
+          monthName = "Dec";
+          break;
+
+        }
+        
+        return monthName;
+      }
 
       function getTime(milis)
       {
@@ -71,32 +118,34 @@
         var currentTime = new Date(Date.now());
         var postTime = new Date(milis);
 
-        if(currentTime.getFullYear() === postTime.getFullYear() && currentTime.getMonth() === postTime.getMonth() )
+        if(currentTime.getFullYear() === postTime.getFullYear() )
         {
-          time = "Today " + postTime.getHours() + ":" + postTime.getMinutes();
-        }
-        else if(currentTime.getDay() > postTime.getDay())
-        {
-          if((postTime.getDay()+1) === currentTime.getDay() )
+          if(currentTime.getMonth() === postTime.getMonth() )
           {
-            time = "Yesterday " + postTime.getHours() + ":" + postTime.getMinutes();
+            if(currentTime.getDate() === postTime.getDate() )
+            {
+              time = "Today " + postTime.getHours() + ":" + postTime.getMinutes();
+            }
+            else if( (currentTime.getDate()+1) === postTime.getDate() )
+            {
+              time = "Yesterday " + postTime.getHours() + ":" + postTime.getMinutes();
+            }
+            else
+            {
+              time = getMonthName(postTime.getDate()) + " " + postTime.getDate()
+            }
           }
           else
           {
-            time = "" + day(postTime.getDay()) + " " + postTime.getHours() + ":" +postTime.getMinutes();
+            time = getMonthName(postTime.getDate()) + " " + postTime.getDate()
           }
-        }
-        else if(currentTime.getDay() < postTime.getDay())
-        {
-          time = "somthing wrong"
+          
         }
         else
         {
-          time = "Not clear"
-          console.log("ERROR : day > " + postTime.getDay() + " hours : " + postTime.getHours())
-          console.log("Full Time " + postTime)
+          time = getMonthName(postTime.getDate()) + " " +  postTime.getFullYear()
         }
-
+        
         return time;
       }
 
