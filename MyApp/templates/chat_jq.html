@@ -66,7 +66,8 @@
       }
       function getMonthName(num)
       {
-        var monthName = "Jan";
+        var monthName = "";
+        console.log("Value of num : " + num)
 
         switch(num)
         {
@@ -111,6 +112,42 @@
         
         return monthName;
       }
+      function getMinutsFormate(t)
+      {
+        var time = "";
+        if(t < 10)
+        {
+          time = "0" + t;
+        }
+        else
+        {
+          time = t;
+        }
+
+        return time
+      }
+      function getHourseFormate(t)
+      {
+        time = "";
+        if( t < 10)
+        {
+          time = "0" + t;
+        }
+        else
+        {
+          if(t > 12)
+          {
+            time = t - 12;
+          }
+          else
+          {
+            time = t;
+          }
+
+        }
+
+        return time;
+      }
 
       function getTime(milis)
       {
@@ -124,20 +161,20 @@
           {
             if(currentTime.getDate() === postTime.getDate() )
             {
-              time = "Today " + postTime.getHours() + ":" + postTime.getMinutes();
+              time = "Today " + getHourseFormate(postTime.getHours()) + ":" + getMinutsFormate(postTime.getMinutes());
             }
-            else if( (currentTime.getDate()+1) === postTime.getDate() )
+            else if( (postTime.getDate()+1) === currentTime.getDate() )
             {
-              time = "Yesterday " + postTime.getHours() + ":" + postTime.getMinutes();
+              time = "Yesterday " + getHourseFormate(postTime.getHours()) + ":" + getMinutsFormate(postTime.getMinutes());
             }
             else
             {
-              time = getMonthName(postTime.getDate()) + " " + postTime.getDate()
+              time = getMonthName(postTime.getMonth()) + " " + postTime.getDate()
             }
           }
           else
           {
-            time = getMonthName(postTime.getDate()) + " " + postTime.getDate()
+            time = getMonthName(postTime.getMonth()) + " " + postTime.getDate()
           }
           
         }
@@ -148,6 +185,9 @@
         
         return time;
       }
+
+      
+
 
     var key = $(".msg_send_btn").val();
     var msg_history = $(".msg_history");
@@ -238,7 +278,7 @@
                                                  <div class="received_msg">
                                                  <div class="received_withd_msg">
                                                  <p>` + data[x]['msg'] + `</p>
-                                                 <span class="time_date">`+ data[x]['msgTime'] + ` </span></div>
+                                                 <span class="time_date">`+ getTime(data[x]['msgTime']) + ` </span></div>
                                                  </div>
                                                  </div> `)
 
@@ -252,7 +292,7 @@
                             msg_history.append(` <div class="outgoing_msg">
                                                 <div class="sent_msg">
                                                 <p>` +  data[x]['msg'] + `</p>
-                                                <span class="time_date">` + data[x]['msgTime'] + `</span> </div>
+                                                <span class="time_date">` + getTime(data[x]['msgTime']) + `</span> </div>
                                                 </div> `);
                             
                             
@@ -319,7 +359,7 @@
                                                  <div class="received_msg">
                                                  <div class="received_withd_msg">
                                                  <p>` + data[x]['msg'] + `</p>
-                                                 <span class="time_date">`+ data[x]['msgTime'] + ` </span></div>
+                                                 <span class="time_date">`+ getTime(data[x]['msgTime']) + ` </span></div>
                                                  </div>
                                                  </div> `)
 
@@ -333,7 +373,7 @@
                             msg_history.append(` <div class="outgoing_msg">
                                                 <div class="sent_msg">
                                                 <p>` +  data[x]['msg'] + `</p>
-                                                <span class="time_date">` + data[x]['msgTime'] + `</span> </div>
+                                                <span class="time_date">` + getTime(data[x]['msgTime']) + `</span> </div>
                                                 </div> `);
                             
                             
@@ -355,7 +395,8 @@
 
 
 
-    }, 5000)
+    }, 6000);
+
 
     });
     </script>
