@@ -11,7 +11,7 @@
         <!-- Messages shows here -->
 
       </div>
-      <div class="type_msg">
+      <div class="type_msg ">
         <div class="input_msg_write">
           <input type="text" class="write_msg" placeholder="Type a message" />
           <button class="msg_send_btn" type="button" value="{{key}}"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
@@ -188,7 +188,7 @@
 
       
 
-
+    var scrolled = false;
     var key = $(".msg_send_btn").val();
     var msg_history = $(".msg_history");
     $.ajax({
@@ -240,7 +240,7 @@
                         }
                     }
                     
-
+                    updateScroll()
                 },
                 error: function(error){
                     console.log(error);
@@ -303,7 +303,7 @@
                         }
                     }
                     
-
+                    scrolled = false;
                 },
                 error: function(error){
                     console.log(error);
@@ -383,7 +383,7 @@
                             console.log("not clicnt nor admin : " + id)
                         }
                     }
-                    
+                      scrolled = false;
                     }
                     
 
@@ -396,6 +396,24 @@
 
 
     }, 6000);
+
+    function updateScroll()
+    {
+      
+      console.log("updateScroll Called")
+      if(!scrolled)
+      {
+        console.log("Scrolled is not True")
+        $('.msg_history').scrollTop($('.msg_history').height())
+      }
+
+    }
+
+    $(".msg_history").on("scroll", function(){
+      scrolled = true;
+      
+      console.log("Scrolled is scrolling")
+    })
 
 
     });

@@ -15,11 +15,6 @@ def get_data(key):
 
 
 
-@messanger.route("/messaging/<string:key>", methods=['POST', 'GET'])
-def chat(key):
-    data = get_data(key)
-    print(data)
-    return render_template("chat_room.html", data=data)
 
 @messanger.route("/send_message", methods=['POST'])
 def message_send():
@@ -55,7 +50,7 @@ def message_send():
     print("Not a post Request")
 
 @messanger.route("/chat/<string:key>", methods=['POST', 'GET'])
-def chat_jq(key):
+def chat(key):
     return render_template("chat_jq.html", key=key)
 
 @messanger.route("/accept_chat_process", methods=['POST', 'GET'])
