@@ -3,7 +3,7 @@
 {% block content %}
 <div id="form-div">
 
-    <form action="{{ url_for('foods.process_data') }}" method="POST" class="border p-3">
+    <form action="{{ url_for('foods.process_data') }}" method="POST" enctype="multipart/form-data" class="border p-3">
 
         <div class="form-group">
             <label for="foodName">Food Name</label>
