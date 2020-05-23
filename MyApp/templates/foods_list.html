@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h1 class="mt-5" > <b>Foods List</b> </h1>
+
+<div class="row mt-3">
+
+    {% for k,v in data.items() %}
+    <div class="col-md-4 mt-3">
+        
+        <div class="card shadow" style="width: 18rem;">
+            <img class="card-img-top bg-danger" src="{{ v['foodImageUri'] }}" alt="Card image cap">
+            <div class="card-body">
+              <h5 class="card-title">{{ v['foodName'] }}</h5>
+              <a href="#" class="btn btn-outline-success">Available</a> <a href="#" class="btn btn-primary" > Not Available</a>
+            </div>
+          </div>
+        
+    </div>
+    {% endfor %}
+
+</div>
+
+
+{% endblock %}

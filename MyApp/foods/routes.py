@@ -34,3 +34,11 @@ def process_data():
             print("some data field may b empty")
 
     return render_template("foods_add.html")
+
+
+@foods.route('/foods_list')
+def foods_list():
+    tmpData = db.child("Foods").get()
+    data = dict(tmpData.val())
+    print(data)
+    return render_template("foods_list.html", data=data)
