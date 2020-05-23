@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, redirect, flash, url_for
 from MyApp import storage, db
 from werkzeug.utils import secure_filename
 
@@ -10,9 +10,9 @@ def add_foods():
     print("add foods called")
     return render_template("foods_add.html")
 
-def downloadUri(image):
+def downloadUri(image, token):
     imageUri = None
-    imageUri = storage.child("foods/logos/" + secure_filename(image.filename)).get_url(None)
+    imageUri = storage.child("Foods/logos/" + secure_filename(image.filename)).get_url(token)
     return imageUri
 
 
@@ -23,8 +23,8 @@ def process_data():
         foodPrice = request.form['foodPrice']
         foodImage = request.files['foodImage']
         if foodImage and foodName and foodPrice:
-            storage.child("Foods/logos/" + secure_filename(foodImage.filename)).put(foodImage)
-            filePath = downloadUri(foodImage)
+            upload = storage.child("Foods/logos/" + secure_filename(foodImage.filename)).put(foodImage)
+            filePath = downloadUri(foodImage, upload['downloadTokens'])
             if filePath:
                 data = { 'foodName' : foodName, 'foodPrice' : foodPrice, 'foodImageUri' : filePath }
                 db.child("Foods").child(foodName).set(data)
