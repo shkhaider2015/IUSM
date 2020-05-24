@@ -66,7 +66,11 @@ def user_profile(uid):
     profile_path = db.child("Users").child(uid).child("Profile").get()
     orders_path = db.child("Users").child(uid).child("Orders").get()
     profile = dict(profile_path.val())
-    orders = dict(orders_path.val())
+
+    if orders_path.val():
+        orders = dict(orders_path.val())
+    else:
+        orders = None
     
     return render_template("profile.html", profile=profile, orders=orders)
 
