@@ -12,7 +12,13 @@
             <img class="card-img-top bg-danger" src="{{ v['foodImageUri'] }}" alt="Card image cap">
             <div class="card-body">
               <h5 class="card-title">{{ v['foodName'] }}</h5>
-              <a href="#" class="btn btn-success disabled">Available</a> <a href="#" class="btn btn-outline-primary "  > Not Available</a>
+              {% if v['availability'] %}
+              <button class="btn btn-success" itemName="{{ v['foodName'] }}" con="True" disabled>Available</button>
+              <button class="btn btn-outline-primary "  itemName="{{ v['foodName'] }}" con="False" > Not Available</button>
+              {% else %}
+              <button class="btn btn-outline-success" itemName="{{ v['foodName'] }}" con="True" >Available</button>
+              <button class="btn btn-primary "  itemName="{{ v['foodName'] }}" con="False" disabled > Not Available</button>
+              {% endif %}
             </div>
           </div>
         
@@ -20,6 +26,53 @@
     {% endfor %}
 
 </div>
+
+
+<script type="text/javascript">
+  $(document).ready(function() {
+  
+  $( "button" ).click(function() {
+      var self = $(this);
+      var itemName = $(this).attr("itemName");
+      var condition = "";
+      if($(this).attr("con") == "True")
+      {
+        condition = true;
+      }
+      else{
+        condition = false;
+      }
+
+      $.ajax({
+              url: '/foods_list/availability',
+              datatype : 'application/json;charset=UTF-8',
+              data: {"itemName": itemName, "condition" : condition },
+              type: 'POST',
+              success: function(response)
+              {
+                
+                  var res =  JSON.parse(response);
+                  var con = res['condition']
+
+                  if(con)
+                  {
+                    self.removeClass("btn-outline-success").addClass("btn-success")
+                  }
+                  else
+                  {
+
+                  }
+              },
+              error: function(error)
+              {
+                    console.log(error);
+              }
+            });
+  });
+  
+  });
+  </script>
+  
 
 
 {% endblock %}

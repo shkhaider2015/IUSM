@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, flash, url_for
+from flask import Blueprint, render_template, request, redirect, flash, url_for, json
 from MyApp import storage, db
 from werkzeug.utils import secure_filename
 
@@ -44,6 +44,18 @@ def foods_list():
     print(data)
     return render_template("foods_list.html", data=data)
 
-@foods.route('/foods_list/<string:name>')
-def availablity(name):
-    db.child("Foods").child(name).child("availability").update()
+
+def availability(name, condition):
+    pair = {'availability' : condition }
+    db.child("Foods").child(name).update(pair)
+
+@foods.route('/foods_list/availability', methods=["POST"])
+def processAvailability():
+    data = { 'status' : 'ok', 'condition' : None}
+    if request.method == 'POST':
+        itemName = request.form['itemName']
+        condition = request.form['condition']
+        availability(itemName, condition)
+        data['condition'] = condition 
+
+    return json.dumps(data)
