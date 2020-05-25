@@ -28,6 +28,7 @@ def process_data():
             if filePath:
                 data = { 'foodName' : foodName, 'foodPrice' : foodPrice, 'foodImageUri' : filePath }
                 db.child("Foods").child(foodName).set(data)
+                return redirect(url_for("foods.foods_list"))
             else:
                 print("File Path Return empty")
         else:
@@ -42,3 +43,7 @@ def foods_list():
     data = dict(tmpData.val())
     print(data)
     return render_template("foods_list.html", data=data)
+
+@foods.route('/foods_list/<string:name>')
+def availablity(name):
+    db.child("Foods").child(name).child("availability").update()
