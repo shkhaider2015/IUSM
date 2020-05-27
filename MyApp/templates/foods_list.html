@@ -13,11 +13,11 @@
             <div class="card-body">
               <h5 class="card-title">{{ v['foodName'] }}</h5>
               {% if v['availability'] %}
-              <button class="btn btn-success" itemName="{{ v['foodName'] }}" con="True" disabled>Available</button>
-              <button class="btn btn-outline-primary "  itemName="{{ v['foodName'] }}" con="False" > Not Available</button>
+              <button class="btn btn-success" itemName="{{ v['foodName'] }}" con="t" disabled>Available</button>
+              <button class="btn btn-outline-primary"  itemName="{{ v['foodName'] }}" con="f" > Not Available</button>
               {% else %}
-              <button class="btn btn-outline-success" itemName="{{ v['foodName'] }}" con="True" >Available</button>
-              <button class="btn btn-primary "  itemName="{{ v['foodName'] }}" con="False" disabled > Not Available</button>
+              <button class="btn btn-outline-success" itemName="{{ v['foodName'] }}" con="t" >Available</button>
+              <button class="btn btn-primary "  itemName="{{ v['foodName'] }}" con="f" disabled > Not Available</button>
               {% endif %}
             </div>
           </div>
@@ -31,11 +31,13 @@
 <script type="text/javascript">
   $(document).ready(function() {
   
+
   $( "button" ).click(function() {
       var self = $(this);
       var itemName = $(this).attr("itemName");
-      var condition = "";
-      if($(this).attr("con") == "True")
+      var con = $(this).attr("con");
+      var condition = false;
+      if(con == "t")
       {
         condition = true;
       }
@@ -53,14 +55,14 @@
                 
                   var res =  JSON.parse(response);
                   var con = res['condition']
-
+                  console.log(con)
                   if(con)
                   {
-                    self.removeClass("btn-outline-success").addClass("btn-success")
+                    
                   }
                   else
                   {
-
+                    
                   }
               },
               error: function(error)

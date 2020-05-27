@@ -51,11 +51,17 @@ def availability(name, condition):
 
 @foods.route('/foods_list/availability', methods=["POST"])
 def processAvailability():
-    data = { 'status' : 'ok', 'condition' : None}
+    condition = None
+    data = { 'status' : 'ok', 'condition' : condition}
     if request.method == 'POST':
         itemName = request.form['itemName']
-        condition = request.form['condition']
+        con = request.form['condition']
+        if con == "true":
+            condition = True
+        else:
+            condition = False
         availability(itemName, condition)
+        print(condition)
         data['condition'] = condition 
 
     return json.dumps(data)
