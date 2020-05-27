@@ -43,6 +43,16 @@
     {% endfor %}
 </div>
 
+<script type="text/javascript" >
+
+    $(document).ready(function()
+    {
+      var page = $("#home");
+      $(".nav-item").removeClass("active");
+      page.addClass("active")
+    });
+
+  </script>
 
 
 {% endblock content %}

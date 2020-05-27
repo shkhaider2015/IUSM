@@ -216,6 +216,9 @@ iframe {
   width: 100%;
   position: relative;
 }
+.josefinsanFonts{
+  font-weight: JosefinSans-Bold;
+}
 
 .login100-form-title {
   font-family: JosefinSans-Bold;

@@ -42,11 +42,17 @@
         
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link" href="{{ url_for('admin.admin_main') }}">Home <span class="sr-only">(current)</span></a>
+              <li class="nav-item " id="home" >
+                <a class="nav-link josefinsanFonts" href="{{ url_for('admin.admin_main') }}">Home <span class="sr-only">(current)</span></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('admin.admin_order') }}">Order</a>
+              <li class="nav-item" id="Order" >
+                <a class="nav-link josefinsanFonts" href="{{ url_for('admin.admin_order') }}">Order</a>
+              </li>
+              <li class="nav-item" id="foods_list" >
+                <a class="nav-link josefinsanFonts " href="{{ url_for('foods.foods_list') }}">Foods</a>
+              </li>
+              <li class="nav-item" id="add_foods" >
+                <a class="nav-link josefinsanFonts " href="{{ url_for('foods.add_foods') }}">Add Foods</a>
               </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -67,7 +73,7 @@
       </main>
 
 
-
+      
 
 
 
