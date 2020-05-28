@@ -12,6 +12,8 @@ storage = firebase.storage()
 
 alchemy = SQLAlchemy()
 login_manager = LoginManager()
+login_manager.login_view = 'admin.admin_login'
+login_manager.login_message_category = 'info'
 
 def time(data_time):
     data_time = data_time/1000.0
@@ -31,6 +33,7 @@ def create_app(config_class=Config):
         alchemy.init_app(app)
     
     login_manager.init_app(app)
+    
 
     from MyApp.admin.routes import admin
     from MyApp.main.routes import main

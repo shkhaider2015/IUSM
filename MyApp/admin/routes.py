@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect,url_for, json
 from MyApp import db
 from datetime import datetime
-from flask_login import login_user
+from flask_login import login_user, login_required
 from MyApp.models import User
 
 admin = Blueprint('admin', __name__)
@@ -11,7 +11,10 @@ admin = Blueprint('admin', __name__)
 def admin_login():
     email_data = 'shkhaider2015@gmail.com'
     pass_data = '123'
-    if request.method == 'GET':
+    if request.method == 'POST':
+        email_data = request.form['email']
+        pass_data = request.form['password']
+        print(email_data, pass_data)
         user = User.query.filter_by(email=email_data).first()
         if user and (user.password == pass_data):
             login_user(user, remember=True)
@@ -19,10 +22,14 @@ def admin_login():
 
         else:
             flash("Unsuccessfull login", 'danger')
+    else:
+        print("kk")
+
     return render_template("index.html")
 
 
 @admin.route("/home")
+@login_required
 def admin_main():
     users = db.child("Users").get()
     userList = list()
@@ -34,6 +41,7 @@ def admin_main():
     return render_template("admin_home_page.html", users=userList)
 
 @admin.route("/order")
+@login_required
 def admin_order():
     orders = db.child("Orders").get()
     objectList = list()
