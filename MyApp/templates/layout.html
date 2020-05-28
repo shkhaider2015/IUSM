@@ -35,7 +35,7 @@
       <div class="container">
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark-red">
-          <a class="navbar-brand" href="#">IUSM</a>
+          <a class="navbar-brand input-serach" href="#">IUSM</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -43,21 +43,21 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item " id="home" >
-                <a class="nav-link josefinsanFonts" href="{{ url_for('admin.admin_main') }}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{{ url_for('admin.admin_main') }}">Home <span class="sr-only">(current)</span></a>
               </li>
               <li class="nav-item" id="Order" >
-                <a class="nav-link josefinsanFonts" href="{{ url_for('admin.admin_order') }}">Order</a>
+                <a class="nav-link" href="{{ url_for('admin.admin_order') }}">Order</a>
               </li>
               <li class="nav-item" id="foods_list" >
-                <a class="nav-link josefinsanFonts " href="{{ url_for('foods.foods_list') }}">Foods</a>
+                <a class="nav-link " href="{{ url_for('foods.foods_list') }}">Foods</a>
               </li>
               <li class="nav-item" id="add_foods" >
-                <a class="nav-link josefinsanFonts " href="{{ url_for('foods.add_foods') }}">Add Foods</a>
+                <a class="nav-link " href="{{ url_for('foods.add_foods') }}">Add Foods</a>
               </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              <input class="form-control mr-sm-2 input-serach" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0 input-serach" type="submit">Search</button>
             </form>
           </div>
         </nav>

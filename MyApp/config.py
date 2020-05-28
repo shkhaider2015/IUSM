@@ -14,4 +14,6 @@ class Config:
     TEMPLATES_AUTO_RELOAD = True
     TESTING = True
     TEMPLATES_AUTO_RELOAD = True
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+    SQLALCHEMY_TRACK_MODIFICATIONS = True
     

@@ -216,8 +216,14 @@ iframe {
   width: 100%;
   position: relative;
 }
-.josefinsanFonts{
-  font-weight: JosefinSans-Bold;
+.input-serach{
+  font-family: JosefinSans-Bold;
+}
+.myFonts{
+  font-family: JosefinSans-Bold;
+}
+.nav-link{
+  font-family: JosefinSans-Bold;
 }
 
 .login100-form-title {
