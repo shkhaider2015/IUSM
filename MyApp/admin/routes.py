@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, flash, redirect,url_for, json
 from MyApp import db
 from datetime import datetime
+from flask_login import login_user
+from MyApp.models import User
 
 admin = Blueprint('admin', __name__)
 
@@ -9,14 +11,14 @@ admin = Blueprint('admin', __name__)
 def admin_login():
     email_data = 'shkhaider2015@gmail.com'
     pass_data = '123'
-    if request.method == 'POST':
-        email = request.form['email']
-        password = request.form['password']
-
-        if email == email_data and password == pass_data:
+    if request.method == 'GET':
+        user = User.query.filter_by(email=email_data).first()
+        if user and (user.password == pass_data):
+            login_user(user, remember=True)
             return redirect(url_for('admin.admin_main'))
+
         else:
-            print("Not Matched")
+            flash("Unsuccessfull login", 'danger')
     return render_template("index.html")
 
 

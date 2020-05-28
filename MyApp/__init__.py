@@ -1,6 +1,7 @@
 from MyApp.config import Config
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 import pyrebase
 from datetime import date
 
@@ -10,6 +11,7 @@ auth = firebase.auth()
 storage = firebase.storage()
 
 alchemy = SQLAlchemy()
+login_manager = LoginManager()
 
 def time(data_time):
     data_time = data_time/1000.0
@@ -25,7 +27,10 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(Config)
 
-    alchemy.init_app(app)
+    with app.app_context():
+        alchemy.init_app(app)
+    
+    login_manager.init_app(app)
 
     from MyApp.admin.routes import admin
     from MyApp.main.routes import main

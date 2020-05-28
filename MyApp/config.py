@@ -15,5 +15,6 @@ class Config:
     TESTING = True
     TEMPLATES_AUTO_RELOAD = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///site.db'
+    SECRET_KEY = 'haider1735shakeel2015'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
     
