@@ -1,6 +1,7 @@
 from MyApp import alchemy as db
 from MyApp import login_manager
 from flask_login import UserMixin
+import socket
 
 
 @login_manager.user_loader
@@ -17,3 +18,11 @@ class User(db.Model, UserMixin):
 
     def __repr__(self):
         return f"User('{self.username}, {self.email}, {self.image_file} ')"
+
+def isConnected():
+    try:
+        socket.create_connection(("www.google.com", 80))
+        return True
+    except OSError:
+        pass
+    return False

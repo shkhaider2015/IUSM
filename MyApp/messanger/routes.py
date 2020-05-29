@@ -1,7 +1,9 @@
-from flask import Blueprint, render_template, request, flash, redirect,url_for, json
+from flask import Blueprint, render_template, request, flash, redirect,url_for, json, abort
 from MyApp import db
 import time
 from flask_login import login_required
+from MyApp.models import isConnected
+from datetime import datetime
 
 
 messanger = Blueprint('messanger', __name__)
@@ -9,6 +11,9 @@ messanger = Blueprint('messanger', __name__)
 previous_data = dict()
 
 def get_data(key):
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     print(key)
     tmp = db.child("Users").child(key).child("Chat").get()
     dicts = dict(tmp.val())
@@ -23,6 +28,9 @@ def get_data(key):
 def message_send():
     data = None
     msg = None
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     if request.method == 'POST':
         time = int(datetime.now().timestamp()) * 1000
         data = request.form['data']
@@ -55,11 +63,17 @@ def message_send():
 @messanger.route("/chat/<string:key>", methods=['POST', 'GET'])
 @login_required
 def chat(key):
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     return render_template("chat_jq.html", key=key)
 
 @messanger.route("/accept_chat_process", methods=['POST', 'GET'])
 @login_required
 def chat_process():
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     global previous_data
     key = request.form['key']
     m_type = request.form['m_type']

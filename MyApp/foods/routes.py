@@ -1,7 +1,8 @@
-from flask import Blueprint, render_template, request, redirect, flash, url_for, json
+from flask import Blueprint, render_template, request, redirect, flash, url_for, json, abort
 from MyApp import storage, db
 from werkzeug.utils import secure_filename
 from flask_login import login_required
+from MyApp.models import isConnected
 
 
 foods = Blueprint('foods', __name__)
@@ -43,6 +44,9 @@ def process_data():
 @foods.route('/foods_list')
 @login_required
 def foods_list():
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     tmpData = db.child("Foods").get()
     data = dict(tmpData.val())
     print(data)
@@ -56,6 +60,9 @@ def availability(name, condition):
 @foods.route('/foods_list/availability', methods=["POST"])
 @login_required
 def processAvailability():
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     condition = None
     data = { 'status' : 'ok', 'condition' : condition}
     if request.method == 'POST':

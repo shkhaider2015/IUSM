@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, flash, redirect,url_for, json
+from flask import Blueprint, render_template, request, flash, redirect,url_for, json, abort
 from MyApp import db
 from datetime import datetime
 from flask_login import login_user, logout_user, login_required
-from MyApp.models import User
+from MyApp.models import User, isConnected
 
 admin = Blueprint('admin', __name__)
 
@@ -31,13 +31,17 @@ def admin_login():
 @admin.route("/home")
 @login_required
 def admin_main():
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     users = db.child("Users").get()
     userList = list()
-    for user in users.each():
-        profile = user.val()
-        data = profile['Profile']
-        print("My data : " + str(data))
-        userList.append(data)
+    if users.val():
+        for user in users.each():
+            profile = user.val()
+            data = profile['Profile']
+            print("My data : " + str(data))
+            userList.append(data)
     return render_template("admin_home_page.html", users=userList)
 
 @admin.route("/logout")
@@ -49,6 +53,9 @@ def logout():
 @admin.route("/order")
 @login_required
 def admin_order():
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     orders = db.child("Orders").get()
     objectList = list()
     for order in orders.each():
@@ -63,6 +70,9 @@ def admin_order():
 @admin.route("/accept_process", methods=['POST'])
 @login_required
 def process_accept():
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     data = None
     if request.method == 'POST':
         data = request.form['data']
@@ -81,6 +91,9 @@ def process_accept():
 @admin.route("/profile/<string:uid>")
 @login_required
 def user_profile(uid):
+    if not isConnected():
+        print("---------------------------Connection Error------------")
+        return abort(404, description="Resource not found")
     profile_path = db.child("Users").child(uid).child("Profile").get()
     orders_path = db.child("Users").child(uid).child("Orders").get()
     profile = dict(profile_path.val())
