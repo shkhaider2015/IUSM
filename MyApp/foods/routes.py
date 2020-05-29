@@ -1,11 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, flash, url_for, json
 from MyApp import storage, db
 from werkzeug.utils import secure_filename
+from flask_login import login_required
 
 
 foods = Blueprint('foods', __name__)
 
 @foods.route('/add_foods')
+@login_required
 def add_foods():
     print("add foods called")
     return render_template("foods_add.html")
@@ -17,6 +19,7 @@ def downloadUri(image, token):
 
 
 @foods.route('/add_foods/process_data', methods=['POST'])
+@login_required
 def process_data():
     if request.method == 'POST':
         foodName = request.form['foodName']
@@ -38,6 +41,7 @@ def process_data():
 
 
 @foods.route('/foods_list')
+@login_required
 def foods_list():
     tmpData = db.child("Foods").get()
     data = dict(tmpData.val())
@@ -50,6 +54,7 @@ def availability(name, condition):
     db.child("Foods").child(name).update(pair)
 
 @foods.route('/foods_list/availability', methods=["POST"])
+@login_required
 def processAvailability():
     condition = None
     data = { 'status' : 'ok', 'condition' : condition}

@@ -59,6 +59,12 @@
               <input class="form-control mr-sm-2 input-serach" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0 input-serach" type="submit">Search</button>
             </form>
+
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item" id="logout" >
+                  <a class="nav-link " href="{{ url_for('admin.logout') }}">Logout</a>
+              </li>
+            </ul>
             
           </div>
         </nav>

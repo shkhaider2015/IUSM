@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, redirect,url_for, json
 from MyApp import db
 from datetime import datetime
-from flask_login import login_user, login_required
+from flask_login import login_user, logout_user, login_required
 from MyApp.models import User
 
 admin = Blueprint('admin', __name__)
@@ -40,6 +40,12 @@ def admin_main():
         userList.append(data)
     return render_template("admin_home_page.html", users=userList)
 
+@admin.route("/logout")
+def logout():
+    logout_user()
+    return redirect(url_for('admin.admin_login'))
+
+
 @admin.route("/order")
 @login_required
 def admin_order():
@@ -55,6 +61,7 @@ def admin_order():
 
 
 @admin.route("/accept_process", methods=['POST'])
+@login_required
 def process_accept():
     data = None
     if request.method == 'POST':
@@ -72,6 +79,7 @@ def process_accept():
 
 
 @admin.route("/profile/<string:uid>")
+@login_required
 def user_profile(uid):
     profile_path = db.child("Users").child(uid).child("Profile").get()
     orders_path = db.child("Users").child(uid).child("Orders").get()

@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request, flash, redirect,url_for, json
 from MyApp import db
 import time
+from flask_login import login_required
+
 
 messanger = Blueprint('messanger', __name__)
 
@@ -17,6 +19,7 @@ def get_data(key):
 
 
 @messanger.route("/send_message", methods=['POST'])
+@login_required
 def message_send():
     data = None
     msg = None
@@ -50,10 +53,12 @@ def message_send():
     print("Not a post Request")
 
 @messanger.route("/chat/<string:key>", methods=['POST', 'GET'])
+@login_required
 def chat(key):
     return render_template("chat_jq.html", key=key)
 
 @messanger.route("/accept_chat_process", methods=['POST', 'GET'])
+@login_required
 def chat_process():
     global previous_data
     key = request.form['key']
